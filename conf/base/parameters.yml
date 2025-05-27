@@ -1,0 +1,12 @@
+class_names:
+  - portrait
+  - serial
+  - federal_seal
+  - signature
+  - denomination
+  - treasury_seal_federalnote
+  - treasury_seal_nonfederalnote
+
+num_images: 250
+
+distance_treshold: 0.045

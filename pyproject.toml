@@ -1,0 +1,36 @@
+[build-system]
+requires = [ "setuptools",]
+build-backend = "setuptools.build_meta"
+
+[project]
+requires-python = ">=3.9"
+name = "mod_project"
+readme = "README.md"
+dynamic = [ "version",]
+dependencies = [ "ipython>=8.10", "jupyterlab>=3.0", "notebook", "kedro[jupyter]~=0.19.13", "kedro-datasets[pandas-csvdataset, pandas-exceldataset, pandas-parquetdataset, plotly-plotlydataset, plotly-jsondataset, matplotlib-matplotlibwriter]>=3.0", "kedro-viz>=6.7.0", "scikit-learn~=1.5.1", "seaborn~=0.12.1",]
+
+[project.scripts]
+mod-project = "mod_project.__main__:main"
+
+[project.optional-dependencies]
+docs = [ "docutils<0.21", "sphinx>=5.3,<7.3", "sphinx_rtd_theme==2.0.0", "nbsphinx==0.8.1", "sphinx-autodoc-typehints==1.20.2", "sphinx_copybutton==0.5.2", "ipykernel>=5.3, <7.0", "Jinja2<3.2.0", "myst-parser>=1.0,<2.1",]
+
+[tool.kedro]
+package_name = "mod_project"
+project_name = "mod_project"
+kedro_init_version = "0.19.13"
+tools = "['Custom Logging', 'Documentation', 'Data Structure']"
+example_pipeline = "True"
+source_dir = "src"
+
+[project.entry-points."kedro.hooks"]
+
+[tool.setuptools.dynamic.version]
+attr = "mod_project.__version__"
+
+[tool.setuptools.packages.find]
+where = [ "src",]
+namespaces = false
+
+[tool.kedro_telemetry]
+project_id = "cbd564d54ebc4ae0a29e8b07876d28e2"

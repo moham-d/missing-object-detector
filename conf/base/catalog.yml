@@ -1,0 +1,98 @@
+# Here you can define all your data sets by using simple YAML syntax.
+#
+# Documentation for this file format can be found in "The Data Catalog"
+# Link: https://docs.kedro.org/en/stable/data/data_catalog.html
+#
+# We support interacting with a variety of data stores including local file systems, cloud, network and HDFS
+#
+# An example data set definition can look as follows:
+#
+#bikes:
+#  type: pandas.CSVDataset
+#  filepath: "data/01_raw/bikes.csv"
+#
+#weather:
+#  type: spark.SparkDataset
+#  filepath: s3a://your_bucket/data/01_raw/weather*
+#  file_format: csv
+#  credentials: dev_s3
+#  load_args:
+#    header: True
+#    inferSchema: True
+#  save_args:
+#    sep: '|'
+#    header: True
+#
+#scooters:
+#  type: pandas.SQLTableDataset
+#  credentials: scooters_credentials
+#  table_name: scooters
+#  load_args:
+#    index_col: ['name']
+#    columns: ['name', 'gear']
+#  save_args:
+#    if_exists: 'replace'
+#    # if_exists: 'fail'
+#    # if_exists: 'append'
+#
+# The Data Catalog supports being able to reference the same file using two different Dataset implementations
+# (transcoding), templating and a way to reuse arguments that are frequently repeated. See more here:
+# https://docs.kedro.org/en/stable/data/data_catalog.html
+
+raw_dataset_images:
+  type: partitions.PartitionedDataset
+  path: data/01_raw/images
+  dataset:
+    type: pillow.ImageDataset
+
+raw_dataset_labels:
+  type: partitions.PartitionedDataset
+  path: data/01_raw/labels
+  dataset:
+    type: text.TextDataset
+
+paired_dataset:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/paired_dataset.pkl
+
+lama_input_images:
+  type: partitions.PartitionedDataset
+  path: data/05_model_input/images
+  dataset:
+    type: pillow.ImageDataset
+
+inpainted_labels:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/inpainted/labels
+  dataset:
+    type: text.TextDataset
+
+inpainted_dataset:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/inpainted/images
+  dataset:
+    type: pillow.ImageDataset
+
+normal_labels:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/normal/labels
+  dataset:
+    type: text.TextDataset
+
+normal_dataset:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/normal/images
+  dataset:
+    type: pillow.ImageDataset
+
+mod_combined_dataset:
+  type: pickle.PickleDataset
+  filepath: data/02_intermediate/mod_combined_dataset.pkl
+
+predicted_bounding_boxes:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/prediction.pkl
+
+graph_representation:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/graph.pkl
