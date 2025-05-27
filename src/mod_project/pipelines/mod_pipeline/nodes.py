@@ -126,3 +126,31 @@ def image_to_graph(mod_combined_dataset, predicted_bounding_boxes, distance_tres
         # plt.show()
 
     return graphs
+
+
+def reference_patterns(predicted_bounding_boxes):
+    def edge_to_edge_distance(box_1, box_2):
+        x1_min, y1_min, x1_max, y1_max = box_1
+        x2_min, y2_min, x2_max, y2_max = box_2
+        dx = max(0, max(x1_min, x2_min) - min(x1_max, x2_max))
+        dy = max(0, max(y1_min, y2_min) - min(y1_max, y2_max))
+        return np.sqrt(dx ** 2 + dy ** 2)
+
+    patterns = {}
+
+    for image_filename, boxes in predicted_bounding_boxes.items():
+        box_coords = [
+            (x1, y1, x2, y2)
+            for (_, _, x1, y1, x2, y2) in boxes
+        ]
+
+        distances = {}
+        for i in range(len(box_coords)):
+            for j in range(i + 1, len(box_coords)):
+                dist = edge_to_edge_distance(box_coords[i], box_coords[j])
+                distances[(i, j)] = dist
+
+        if len(distances) > 0:
+            patterns[image_filename].append(distances)
+
+    return patterns

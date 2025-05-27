@@ -2,7 +2,8 @@ from kedro.pipeline import Pipeline, node
 from .nodes import (
     load_mod_data,
     detect_objects,
-    image_to_graph
+    image_to_graph,
+    reference_patterns
 )
 
 
@@ -17,9 +18,13 @@ def create_pipeline(**kwargs):
              inputs="mod_combined_dataset",
              outputs="predicted_bounding_boxes",
              name="detect_objects"),
-        node(image_to_graph,
-             inputs=["mod_combined_dataset", "predicted_bounding_boxes",
-                     "params:distance_treshold", "params:class_names"],
-             outputs="graph_representation",
-             name="image_to_graph")
+        #    node(image_to_graph,
+        #         inputs=["mod_combined_dataset", "predicted_bounding_boxes",
+        #                 "params:distance_treshold", "params:class_names"],
+        #         outputs="graph_representation",
+        #         name="image_to_graph")
+        node(reference_patterns,
+             inputs="predicted_bounding_boxes",
+             outputs="patterns",
+             name="reference_patterns")
     ])

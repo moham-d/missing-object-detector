@@ -96,3 +96,7 @@ predicted_bounding_boxes:
 graph_representation:
   type: pickle.PickleDataset
   filepath: data/07_model_output/graph.pkl
+
+patterns:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/patterns.pkl
