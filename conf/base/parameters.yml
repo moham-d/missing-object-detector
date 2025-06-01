@@ -9,4 +9,7 @@ class_names:
 
 num_images: 250
 
-distance_treshold: 0.045
+distance_treshold: 0.06
+
+pos_threshold: 0.1
+edge_threshold: 0.05

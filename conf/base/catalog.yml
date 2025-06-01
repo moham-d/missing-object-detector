@@ -63,25 +63,25 @@ lama_input_images:
 
 inpainted_labels:
   type: partitions.PartitionedDataset
-  path: data/03_primary/inpainted/labels
+  path: data/02_intermediate/inpainted/labels
   dataset:
     type: text.TextDataset
 
 inpainted_dataset:
   type: partitions.PartitionedDataset
-  path: data/03_primary/inpainted/images
+  path: data/02_intermediate/inpainted/images
   dataset:
     type: pillow.ImageDataset
 
 normal_labels:
   type: partitions.PartitionedDataset
-  path: data/03_primary/normal/labels
+  path: data/02_intermediate/normal/labels
   dataset:
     type: text.TextDataset
 
 normal_dataset:
   type: partitions.PartitionedDataset
-  path: data/03_primary/normal/images
+  path: data/02_intermediate/normal/images
   dataset:
     type: pillow.ImageDataset
 
@@ -93,10 +93,64 @@ predicted_bounding_boxes:
   type: pickle.PickleDataset
   filepath: data/07_model_output/prediction.pkl
 
-graph_representation:
+input_graphs:
   type: pickle.PickleDataset
   filepath: data/07_model_output/graph.pkl
+
+cvat_graphs:
+  type: pickle.PickleDataset
+  filepath: data/07_model_output/cvat.pkl
 
 patterns:
   type: pickle.PickleDataset
   filepath: data/07_model_output/patterns.pkl
+
+# patterns:
+#   type: kedro_datasets.pandas.CSVDataSet
+#   filepath: data/07_model_output/patterns.csv
+
+# reference
+reference_dataset:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/reference/images
+  dataset:
+    type: pillow.ImageDataset
+
+reference_labels:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/reference/labels
+  dataset:
+    type: text.TextDataset
+
+reference_combined:
+  type: pickle.PickleDataset
+  filepath: data/03_primary/references.pkl
+
+reference_graphs:
+  type: pickle.PickleDataset
+  filepath: data/03_primary/reference_graphs.pkl
+
+# classified, final dataset 
+classified_inpainted_labels:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/inpainted/labels
+  dataset:
+    type: text.TextDataset
+
+classified_inpainted_dataset:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/inpainted/images
+  dataset:
+    type: pillow.ImageDataset
+
+classified_normal_labels:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/normal/labels
+  dataset:
+    type: text.TextDataset
+
+classified_normal_dataset:
+  type: partitions.PartitionedDataset
+  path: data/03_primary/normal/images
+  dataset:
+    type: pillow.ImageDataset

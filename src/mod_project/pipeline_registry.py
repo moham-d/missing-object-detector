@@ -16,11 +16,13 @@ from kedro.pipeline import Pipeline
 
 from mod_project.pipelines.dataset_pipeline import pipeline as dataset_pipeline
 from mod_project.pipelines.mod_pipeline import pipeline as mod_pipeline
+from mod_project.pipelines.mod_evaluation_pipeline import pipeline as eval_pipeline
 
 
 def register_pipelines():
     return {
         "dataset": dataset_pipeline.create_pipeline(),
         "mod": mod_pipeline.create_pipeline(),
+        "eval": eval_pipeline.create_pipeline,
         "__default__": dataset_pipeline.create_pipeline()
     }
