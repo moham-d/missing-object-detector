@@ -275,21 +275,8 @@ def pos_threshold_sweep(mod_combined_dataset, reference_graphs, distance_thresho
         print(
             f"pos_threshold={pos_threshold:.4f} → avg_node_jaccard={avg_node_jaccard:.4f}")
 
-    # Plot:
-    plt.figure(figsize=(8, 6))
-    plt.plot(pos_thresholds, avg_node_jaccards, marker='o')
-    plt.xlabel('pos_threshold')
-    plt.ylabel('Average Node Jaccard (Normal=True)')
-    plt.title('Effect of pos_threshold on Node Jaccard (Normal=True)')
-    plt.grid(True)
-
-    # Save:
-    plt.savefig("pos_threshold_normal_true.png", dpi=300)
-    plt.close()
-
+    plot(pos_thresholds, avg_node_jaccards, "pos_threshold")
     print(pos_thresholds, avg_node_jaccards)
-    # Return for further analysis if needed:
-    # return pos_thresholds, avg_node_jaccards
 
 
 def edge_threshold_sweep(mod_combined_dataset, reference_graphs, pos_threshold=0.1, distance_threshold=0.06):
@@ -457,18 +444,39 @@ def edge_threshold_sweep(mod_combined_dataset, reference_graphs, pos_threshold=0
         print(
             f"edge_threshold={edge_threshold:.4f} → avg_edge_jaccard={avg_edge_jaccard:.4f}")
 
-    # Plot:
-    plt.figure(figsize=(8, 6))
-    plt.plot(edge_thresholds, avg_edge_jaccards, marker='o')
-    plt.xlabel('edge_threshold')
-    plt.ylabel('Average Edge Jaccard (Normal=True)')
-    plt.title(
-        f'Effect of edge_threshold on Edge Jaccard (Normal=True), pos_threshold={pos_threshold}')
-    plt.grid(True)
-
-    # Save:
-    plt.savefig("edge_threshold_normal_true.png", dpi=300)
-    plt.close()
-
+    plot(edge_thresholds, avg_edge_jaccards, "edge_threshold")
     print(edge_thresholds, avg_edge_jaccards)
-    # return edge_thresholds, avg_edge_jaccards
+
+
+def plot(tresholds, avg_jaccards, label):
+    # Plot
+    fig, ax = plt.subplots(figsize=(6, 5))
+
+    ax.plot(
+        tresholds,
+        avg_jaccards,
+        color="#2B2F42",
+        linewidth=2
+    )
+
+    # Hide the all but the bottom spines (axis lines)
+    ax.spines["right"].set_visible(False)
+    ax.spines["left"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+
+    # Only show ticks on the left and bottom spines
+    ax.yaxis.set_ticks_position("left")
+    ax.xaxis.set_ticks_position("bottom")
+    ax.spines["bottom"].set_bounds(min(tresholds), max(tresholds))
+
+    ax.set_xlabel(label)
+    if label.startswith("pos") == True:
+        ax.set_ylabel("Average Node Jaccard")
+    else:
+        ax.set_ylabel("Average Edge Jaccard")
+
+    # plt.show()
+
+    # Save and close
+    plt.savefig(f"{label}_normal_true.png", dpi=300, bbox_inches="tight")
+    plt.close()

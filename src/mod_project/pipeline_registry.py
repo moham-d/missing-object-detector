@@ -23,6 +23,6 @@ def register_pipelines():
     return {
         "dataset": dataset_pipeline.create_pipeline(),
         "mod": mod_pipeline.create_pipeline(),
-        "eval": eval_pipeline.create_pipeline,
+        "eval": eval_pipeline.create_pipeline(),
         "__default__": dataset_pipeline.create_pipeline()
     }

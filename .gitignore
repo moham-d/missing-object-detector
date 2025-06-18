@@ -1,3 +1,6 @@
+test/
+figures/
+
 ##########################
 # KEDRO PROJECT
 
@@ -159,6 +162,3 @@ venv.bak/
 
 # mlflow local runs
 mlruns/*
-
-*.png
-*.csv
